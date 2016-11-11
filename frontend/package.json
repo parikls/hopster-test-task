@@ -1,0 +1,15 @@
+{
+  "name": "hopster-test-task",
+  "version": "1.0.0",
+  "description": "Hopster Test Task",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.0"
+  }
+}
