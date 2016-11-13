@@ -4,7 +4,7 @@ import json
 import time
 from base64 import b64encode, b64decode, urlsafe_b64encode
 
-from settings import JWT_SECONDS_EXPIRY_TIME, JWT_SECRET
+from backend.settings import JWT_SECONDS_EXPIRY_TIME, JWT_SECRET
 
 
 class JWTValidationError(Exception):

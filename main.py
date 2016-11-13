@@ -1,5 +1,5 @@
 import webapp2
-from routes import routes
+from backend.routes import routes
 
 
 app = webapp2.WSGIApplication(routes=routes, debug=True)

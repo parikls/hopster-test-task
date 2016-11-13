@@ -1,9 +1,9 @@
 import webapp2
 from google.appengine.ext import db
 
-from models import Movie
-from utils.decorators import ensure_permissions
-from utils.helpers import json_response
+from backend.models import Movie
+from backend.utils.decorators import ensure_permissions
+from backend.utils.helpers import json_response
 
 
 class MovieListHandler(webapp2.RequestHandler):

@@ -1,8 +1,8 @@
 import webapp2
 
-from handlers.api.auth import LoginHandler
-from handlers.api.movie import MovieListHandler, MovieDetailsHandler
-from handlers.index import IndexHandler
+from backend.handlers.api.auth import LoginHandler
+from backend.handlers.api.movie import MovieListHandler, MovieDetailsHandler
+from backend.handlers.index import IndexHandler
 
 routes = [
 

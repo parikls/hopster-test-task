@@ -1,7 +1,7 @@
 from functools import wraps
 
-from jwt import JWT, JWTValidationError, JWTToken
-from utils.helpers import json_response
+from backend.jwt import JWTValidationError, JWTToken
+from backend.utils.helpers import json_response
 
 
 def ensure_permissions(*permissions):

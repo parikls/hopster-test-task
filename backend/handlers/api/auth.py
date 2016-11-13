@@ -1,16 +1,10 @@
-import json
-import logging
-
 import webapp2
 from google.appengine.ext import db
 
-from jwt import JWT
-from models import User
-from settings import JWT_DEFAULT_SCOPES
-from utils.helpers import json_response
-
-
-class AuthException(Exception): pass
+from backend.jwt import JWT
+from backend.models import User
+from backend.settings import JWT_DEFAULT_SCOPES
+from backend.utils.helpers import json_response
 
 
 class LoginHandler(webapp2.RequestHandler):
