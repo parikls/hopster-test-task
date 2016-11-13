@@ -35,28 +35,19 @@ class MovieDetailsHandler(webapp2.RequestHandler):
 
     @ensure_permissions("movie:read")
     def get(self, movie_id):
-        try:
-            movie = Movie.get_by_id(int(movie_id))
-        except ValueError:
-            json_response(self, {"message": "invalid movie id"}, status=400)
-            return
-
+        movie = Movie.get_by_id(int(movie_id))
         json_response(self, movie.to_dict(), status=200)
 
     @ensure_permissions("movie:update")
     def post(self, movie_id):
-        try:
-            movie = Movie.get_by_id(int(movie_id))
-        except ValueError:
-            json_response(self, {"message": "invalid movie id"}, status=400)
+        movie = Movie.get_by_id(int(movie_id))
+
+        if not movie:
+            json_response(self, {"message": "No such movie"}, status=404)
             return
 
-        name = self.request.get("name")
-        description = self.request.get("description")
-
-        if not (name and description):
-            json_response(self, {"message": "You didn't send any fields for update"}, status=400)
-            return
+        name = self.request.get("name", movie.name)
+        description = self.request.get("description", movie.description)
 
         movie.name = name
         movie.description = description
@@ -66,10 +57,10 @@ class MovieDetailsHandler(webapp2.RequestHandler):
     @ensure_permissions("movie:delete")
     def delete(self, movie_id):
 
-        try:
-            movie = Movie.get_by_id(int(movie_id))
-        except ValueError:
-            json_response(self, {"message": "invalid movie id"}, status=400)
+        movie = Movie.get_by_id(int(movie_id))
+
+        if not movie:
+            json_response(self, {"message": "No such movie"}, status=404)
             return
 
         movie.delete()
