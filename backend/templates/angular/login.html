@@ -1,0 +1,38 @@
+<div class="container valign" style="margin-top: 5%;">
+
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <div class="card white z-depth-4">
+                <div class="card-conent">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12 m12 l12">
+                                <p class="red-text center-align">{{ vm.messages.authErrorMessage }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form ng-submit="vm.submitForm()">
+                                <div class="row" style=" margin-bottom: 5%">
+                                    <div class="input-field col s12 m12 l12" style="margin-top: 5%;">
+                                        <input name="email" type="text" ng-model="vm.credentials.email">
+                                        <label for="email">email</label>
+                                    </div>
+                                    <div class="input-field col s12 m12 l12">
+                                        <input name="password" type="password" ng-model="vm.credentials.password">
+                                        <label for="password">password</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s12 m12 l12">
+                                        <button type="submit" class="btn deep-orange accent-3">Войти</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

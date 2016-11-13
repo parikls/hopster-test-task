@@ -1,0 +1,27 @@
+<p class="center-align">
+    <a class="btn deep-orange accent-3" ng-href="/#/movie/create/">Add Movie!</a>
+</p>
+<h4 style="margin-top: 25%" ng-hide="vm.data.movieList.length > 0">
+<p class="center-align">
+    No movies yet
+</p></h4>
+
+<ul class="collapsible popout" data-collapsible="accordion">
+    <li ng-repeat="movie in vm.data.movieList">
+        <div class="collapsible-header"><i class="material-icons">videocam</i>{{ ::movie.name }}</div>
+        <div class="collapsible-body">
+            <p class="grey-text">{{ ::movie.add_timestamp }}</p>
+            <p>{{ ::movie.description }}</p>
+            <p><a class="btn deep-orange accent-3" ng-href="/#/movie/{{ ::movie.id }}/">Details</a></p>
+        </div>
+
+    </li>
+</ul>
+
+
+<script type="text/javascript">
+    // initalize materialze collapsible
+    $(document).ready(function () {
+        $('.collapsible').collapsible();
+    });
+</script>

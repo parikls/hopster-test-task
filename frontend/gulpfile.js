@@ -2,9 +2,9 @@ var gulp = require('gulp');
 var concat = require('gulp-concat');
 
 gulp.task('js', function () {
-    gulp.src(['movie/*.js', "movie/**/*.js", 'movie/**/**/*.js', 'movie/**/**/**/*.js'])
-        .pipe(concat('movie.js'))
-        .pipe(gulp.dest('.'))
+    gulp.src(['app/*.js', "app/**/*.js", 'app/**/**/*.js', 'app/**/**/**/*.js'])
+        .pipe(concat('bundle.js'))
+        .pipe(gulp.dest('../backend/static/js/'))
 });
 
 gulp.task("watch", ["js"], function () {
@@ -12,7 +12,7 @@ gulp.task("watch", ["js"], function () {
     var depth = "**/";
 
     for (var i = 0; i < 5; i++) {
-        gulp.watch("movie/" + depth + "*.js", ["js"]);
+        gulp.watch("app/" + depth + "*.js", ["js"]);
         depth += "**/"
 
     }

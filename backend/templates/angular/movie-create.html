@@ -1,0 +1,42 @@
+<div class="container valign" style="margin-top: 5%;">
+
+
+    <div class="row">
+        <div class="col s12 m12 l12">
+            <div class="card white z-depth-4">
+                <div class="card-conent">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col s12 m12 l12">
+                                <p class="red-text center-align">{{ vm.messages.movieErrorMessage }}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <form ng-submit="vm.submitForm()">
+                                <div class="row" style=" margin-bottom: 5%">
+                                    <div class="input-field col s12 m12 l12" style="margin-top: 5%;">
+                                        <input name="movie_name" type="text" ng-model="vm.movie.name">
+                                        <label for="movie_name">Movie name</label>
+                                    </div>
+                                    <div class="input-field col s12 m12 l12">
+                                        <input name="movie_description" type="text" ng-model="vm.movie.description">
+                                        <label for="movie_description">description</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col s6 m6 l6">
+                                        <button type="submit" class="btn green">Create Movie</button>
+                                    </div>
+                                    <div class="col s6 m6 l6">
+                                        <a ng-href="#/movie" class="btn red">Discard Changes</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
