@@ -43,5 +43,3 @@ class LoginHandler(webapp2.RequestHandler):
         token = JWT.create_token(user.email, JWT_DEFAULT_SCOPES)
         self.response.headers["JWT"] = token
         self.response.status = 200
-
-
