@@ -23,7 +23,7 @@ def ensure_permissions(*permissions):
                 # JWT validation
                 jwt_token = JWTToken(token)
                 jwt_token.is_valid()
-                jwt_token.is_valid_against_scopes(permissions)
+                jwt_token.is_valid_against_scopes(*permissions)
                 return func(handler, *args, **kwargs)
             except JWTValidationError as exc:
                 json_response(handler, {"message": exc.message}, 401)

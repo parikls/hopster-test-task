@@ -56,7 +56,6 @@ function movieService($http, $location, authService, messageService) {
     }
 
     function createMovie(movie) {
-        console.log("http");
         $http({
             method: "POST",
             url: "/api/movie/",
@@ -105,7 +104,6 @@ function movieService($http, $location, authService, messageService) {
     }
 
     function updateMovie(movieId, movie) {
-        console.log(movie);
         $http({
             method: "POST",
             url: "/api/movie/" + movieId + "/",

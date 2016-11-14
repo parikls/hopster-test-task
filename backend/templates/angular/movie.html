@@ -8,9 +8,9 @@
 
 <ul class="collapsible popout" data-collapsible="accordion">
     <li ng-repeat="movie in vm.data.movieList">
-        <div class="collapsible-header"><p class="center-align">{{ ::movie.name }}</p></div>
+        <div class="collapsible-header"><h5 class="center-align">{{ ::movie.name }}</h5></div>
         <div class="collapsible-body">
-            <p class="grey-text">{{ ::movie.add_timestamp }}</p>
+            <p class="grey-text">added {{ ::movie.add_timestamp }}</p>
             <p>{{ ::movie.description }}</p>
             <p><a class="btn deep-orange accent-3" ng-href="/#/movie/{{ ::movie.id }}/">Details</a></p>
         </div>
