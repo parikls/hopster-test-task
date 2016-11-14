@@ -33,11 +33,11 @@ class JWTToken:
 
         return True
 
-    def is_valid_against_scopes(self, *scopes):
+    def has_permissions(self, *permissions):
 
-        for scope in scopes:
-            if scope not in self.parsed_payload["scopes"]:
-                raise JWTValidationError("Permission denied for {}".format(scope))
+        for permission in permissions:
+            if permission not in self.parsed_payload["permissions"]:
+                raise JWTValidationError("Permission denied for {}".format(permission))
         return True
 
     def _parse(self):
@@ -67,14 +67,14 @@ class JWT:
         raise NotImplemented("Use classmethods instead of JWT Instance creation")
 
     @classmethod
-    def create_token(cls, email, *scopes):
+    def create_token(cls, email, *permissions):
         """
         Creates token using user email and permission scopes
         :param: email: str
         :param: scopes: list
         """
         header = cls.construct_header()
-        payload = cls.construct_claim(email, *scopes)
+        payload = cls.construct_payload(email, *permissions)
         signature = cls.construct_signature(header, payload)
         return b64encode(header) + "." + b64encode(payload) + "." + signature
 
@@ -87,14 +87,14 @@ class JWT:
         })
 
     @classmethod
-    def construct_claim(cls, email, *scopes):
+    def construct_payload(cls, email, *permissions):
 
         return json.dumps(
             {
                 "iss": "hopster",
                 "exp": int(time.time()) + JWT_SECONDS_EXPIRY_TIME,
                 "jti": email,
-                "scopes": scopes
+                "permissions": permissions
             }
         )
 

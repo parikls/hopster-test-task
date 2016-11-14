@@ -8,6 +8,7 @@ function messageService() {
 
     service.errorAuth = errorAuth;
     service.errorMovie = errorMovie;
+    service.clearMessages = clearMessages;
 
     service.messages = {
         movieErrorMessage: null,
@@ -22,5 +23,10 @@ function messageService() {
 
     function errorMovie(message){
         service.messages.movieErrorMessage = message;
+    }
+
+    function clearMessages(){
+        service.messages.movieErrorMessage = null;
+        service.messages.authErrorMessage = null;
     }
 }

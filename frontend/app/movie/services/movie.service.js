@@ -30,10 +30,7 @@ function movieService($http, $location, authService, messageService) {
                 service.movieStorage.movieList = response.data;
                 service.initalized = true;
             }, function error(response) {
-                if (response.status == 401) {
-                    messageService.errorAuth("Session expired!");
-                    $location.path("/login")
-                }
+                handleErrorResponse(response);
             })
         }
 
@@ -47,11 +44,7 @@ function movieService($http, $location, authService, messageService) {
         }).then(function success(response) {
             service.movieStorage.movie = response.data;
         }, function error(response) {
-            // handle 401 here
-            if (response.status == 401) {
-                messageService.errorAuth("Session expired!");
-                $location.path("/login")
-            }
+            handleErrorResponse(response);
         })
     }
 
@@ -69,17 +62,11 @@ function movieService($http, $location, authService, messageService) {
             if (response.status == 201) {
                 // add movie to storage on 201 response
                 service.movieStorage.movieList.unshift(response.data);
-                messageService.errorMovie(null);
             }
 
             $location.path("/movie")
         }, function error(response) {
-            if (response.status == 401) {
-                messageService.errorAuth("Session expired!");
-                $location.path("/login")
-            } else {
-                messageService.errorMovie(response.data.message);
-            }
+            handleErrorResponse(response);
         })
     }
 
@@ -89,17 +76,14 @@ function movieService($http, $location, authService, messageService) {
             url: "/api/movie/" + movieId + "/",
             headers: {"Authorization": authService.getAuthHeader()}
         }).then(function success(response) {
-            for (var i=0; i<service.movieStorage.movieList.length; i++){
-                if (service.movieStorage.movieList[i].id == movieId){
+            for (var i = 0; i < service.movieStorage.movieList.length; i++) {
+                if (service.movieStorage.movieList[i].id == movieId) {
                     service.movieStorage.movieList.splice(i, 1);
                 }
             }
             $location.path("/movie");
         }, function error(response) {
-            if (response.status == 401) {
-                messageService.errorAuth("Session expired!");
-                $location.path("/login")
-            }
+            handleErrorResponse(response);
         })
     }
 
@@ -113,19 +97,35 @@ function movieService($http, $location, authService, messageService) {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
         }).then(function success(response) {
-            for (var i=0; i<service.movieStorage.movieList.length; i++){
-                if (service.movieStorage.movieList[i].id == movieId){
+            for (var i = 0; i < service.movieStorage.movieList.length; i++) {
+                if (service.movieStorage.movieList[i].id == movieId) {
                     service.movieStorage.movieList[i] = movie;
                 }
             }
-            messageService.errorMovie(null);
             $location.path("/movie");
         }, function error(response) {
-            if (response.status == 401) {
-                messageService.errorAuth("Session expired!");
-                $location.path("/login")
-            }
+            handleErrorResponse(response);
         })
     }
 
+    function handleErrorResponse(response) {
+        if (response.status == 401) {
+            handleResponse401();
+        } else if (response.status == 404) {
+            handleResponse404();
+        } else {
+            console.log(response);
+            messageService.errorMovie(response.data.message);
+        }
+    }
+
+    function handleResponse401() {
+        messageService.errorAuth("Session expired!");
+        $location.path("/login");
+    }
+
+    function handleResponse404() {
+        messageService.errorMovie("Movie not found");
+        $location.path("/movie");
+    }
 }

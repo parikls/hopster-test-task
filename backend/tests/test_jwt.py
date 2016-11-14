@@ -38,7 +38,7 @@ class JWTTestCase(unittest.TestCase):
         token = JWT.create_token("test@email.com", "movie:read")
         jwt_token = JWTToken(token)
         try:
-            jwt_token.is_valid_against_scopes("movie:delete")
+            jwt_token.has_permissions("movie:delete")
         except JWTValidationError as exc:
             raised = True
             message = exc.message
@@ -49,7 +49,7 @@ class JWTTestCase(unittest.TestCase):
     def test_is_valid_against_scopes_true(self):
         token = JWT.create_token("test@email.com", "movie:read")
         jwt_token = JWTToken(token)
-        self.assertTrue(jwt_token.is_valid_against_scopes("movie:read"))
+        self.assertTrue(jwt_token.has_permissions("movie:read"))
 
     def test_is_valid_parse_failed_invalid_token(self):
         token = "not_valid_token"
@@ -73,7 +73,7 @@ class JWTTestCase(unittest.TestCase):
 
     def test_is_valid_parse_failed_json_decode_failed(self):
         header = JWT.construct_header()
-        payload = JWT.construct_claim("test@email.com", ["movie:read"])
+        payload = JWT.construct_payload("test@email.com", ["movie:read"])
         # invalidate payload
         payload += "string_for_json_invalidation"
         signature = JWT.construct_signature(header, payload)

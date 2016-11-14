@@ -1,9 +1,9 @@
 angular.module("movieCatalogue")
     .controller("MovieDetailsController", MovieDetailsController);
 
-MovieDetailsController.$inject = ["movieService", "$routeParams"];
+MovieDetailsController.$inject = ["movieService", "$routeParams", "messageService"];
 
-function MovieDetailsController(movieService, $routeParams) {
+function MovieDetailsController(movieService, $routeParams, messageService) {
 
     var vm = this;
 
@@ -12,6 +12,7 @@ function MovieDetailsController(movieService, $routeParams) {
     function activate() {
         vm.editor = false;
         vm.data = movieService.movieStorage;
+        vm.messages = messageService.messages;
 
         vm.toggleEditor = toggleEditor;
         vm.deleteMovie = deleteMovie;

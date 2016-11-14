@@ -1,9 +1,9 @@
 angular.module("movieCatalogue")
     .controller("MovieController", MovieController);
 
-MovieController.$inject = ["movieService"];
+MovieController.$inject = ["movieService", "messageService"];
 
-function MovieController(movieService) {
+function MovieController(movieService, messageService) {
 
     var vm = this;
 
@@ -11,6 +11,7 @@ function MovieController(movieService) {
 
     function activate() {
         vm.data = movieService.movieStorage;
+        vm.messages = messageService.messages;
 
         // fetch movies on init
         movieService.fetchMovies();

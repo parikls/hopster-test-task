@@ -1,50 +1,65 @@
-<div class="row">
+<div class="container valign" style="margin-top: 5%">
+    <div class="row">
 
-    <div class="col s12 m12 l12">
-        <div class="card z-depth-3">
-            <div class="card-content black-text">
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <h4 class="center-align">
-                            <p ng-hide="vm.editor">{{ vm.data.movie.name }}</p>
-                            <div class="input-field col s6 m6 l6" ng-show="vm.editor">
-                                <label for="name">movie name</label>
-                                <input type="text" name="name" value="{{ vm.data.movie.name }}" ng-model="vm.editedMovie.name">
+        <div class="col s12 m12 l12">
+            <div class="card z-depth-3">
+                <div class="card-content black-text">
+                    <div class="row">
+                            <div class="col s12 m12 l12">
+                                <p class="red-text center-align">{{ vm.messages.movieErrorMessage }}</p>
                             </div>
+                        </div>
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <h4 class="center-align">
+                                <p ng-hide="vm.editor">{{ vm.data.movie.name }}</p>
+                                <div class="input-field col s12 m12 l12" ng-show="vm.editor">
+                                    <label for="name">movie name</label>
+                                    <input type="text" name="name" value="{{ vm.data.movie.name }}"
+                                           ng-model="vm.editedMovie.name">
+                                </div>
 
-                            </a>
-                        </h4>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <p ng-hide="vm.editor">{{ vm.data.movie.add_timestamp }}</p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col s12 m12 l12">
-                        <p ng-hide="vm.editor"> {{ vm.data.movie.description }}</p>
-                        <div class="input-field col s6 m6 l6" ng-show="vm.editor">
-                            <label for="description">movie description</label>
-                            <input type="text" name="description" value="{{ vm.data.movie.description }}" ng-model="vm.editedMovie.description">
+                                </a>
+                            </h4>
                         </div>
                     </div>
-                </div>
-                <div class="row">
-                    <p class="center-align">
-                        <button ng-hide="vm.editor" ng-click="vm.toggleEditor()" class="btn yellow accent-3">edit movie</button>
-                        <button ng-hide="vm.editor" ng-click="vm.deleteMovie()" class="btn red">delete movie</button>
-                    </p>
 
-                    <p class="center-align">
-                        <button ng-show="vm.editor" ng-click="vm.updateMovie()" class="btn green">submit changes</button>
-                        <button ng-show="vm.editor" ng-click="vm.toggleEditor()" class="btn yellow">discard changes</button>
-                    </p>
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <p ng-hide="vm.editor">{{ vm.data.movie.add_timestamp }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col s12 m12 l12">
+                            <p ng-hide="vm.editor"> {{ vm.data.movie.description }}</p>
+                            <div class="input-field col s12 m12 l12" ng-show="vm.editor">
+                                <label for="description">movie description</label>
+                                <input type="text" name="description" value="{{ vm.data.movie.description }}"
+                                       ng-model="vm.editedMovie.description">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <p class="center-align">
+                            <button ng-hide="vm.editor" ng-click="vm.toggleEditor()" class="btn yellow accent-3">edit
+                                movie
+                            </button>
+                            <button ng-hide="vm.editor" ng-click="vm.deleteMovie()" class="btn red">delete movie
+                            </button>
+                        </p>
+
+                        <p class="center-align">
+                            <button ng-show="vm.editor" ng-click="vm.updateMovie()" class="btn green">submit changes
+                            </button>
+                            <button ng-show="vm.editor" ng-click="vm.toggleEditor()" class="btn yellow">discard
+                                changes
+                            </button>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+    </div>
 </div>
