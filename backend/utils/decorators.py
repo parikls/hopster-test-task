@@ -8,7 +8,7 @@ from backend.utils.helpers import json_response
 def ensure_permissions(*permissions):
     """
     Decorator which ensures that user has correct
-    permissions based on provided JWT in header
+    permissions based on provided JWT
     :param permissions: str
     """
 

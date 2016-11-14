@@ -15,6 +15,10 @@ class JWTValidationError(Exception):
 
 class JWTToken:
 
+    """
+    Stateful class for JWT Token
+    """
+
     def __init__(self, token):
         self.token = token
         self.decoded_header = None
@@ -25,20 +29,19 @@ class JWTToken:
         self._parse()
 
     def is_valid(self):
+        # check expire time
         if self.parsed_payload.get("exp", 0) < int(time.time()):
             raise JWTValidationError(message="Token expired")
 
+        # check signature
         if JWT.construct_signature(self.decoded_header, self.decoded_payload) != self.signature:
             raise JWTValidationError("Invalid token!")
-
-        return True
 
     def has_permissions(self, *permissions):
 
         for permission in permissions:
             if permission not in self.parsed_payload["permissions"]:
                 raise JWTValidationError("Permission denied for {}".format(permission))
-        return True
 
     def _parse(self):
         try:
@@ -60,11 +63,11 @@ class JWTToken:
 class JWT:
 
     """
-    JSON Web Token implementation. Only SHA256 is supported.
+    JSON Web Token factory. Only SHA256 is supported.
     """
 
     def __new__(cls, *args, **kwargs):
-        raise NotImplemented("Use classmethods instead of JWT Instance creation")
+        raise NotImplemented("Use classmethods instead of JWT instance creation")
 
     @classmethod
     def create_token(cls, email, *permissions):
@@ -79,16 +82,25 @@ class JWT:
         return b64encode(header) + "." + b64encode(payload) + "." + signature
 
     @classmethod
-    def construct_header(cls):
-
+    def construct_header(cls, alg="HS256"):
+        """
+        Return json dump of JWT header
+        :param alg: str
+        :return str
+        """
         return json.dumps({
             "typ": "JWT",
-            "alg": "HS256"
+            "alg": alg
         })
 
     @classmethod
     def construct_payload(cls, email, *permissions):
-
+        """
+        Return json dump of JWT payload
+        :param email: str
+        :param permissions: str
+        :return str
+        """
         return json.dumps(
             {
                 "iss": "hopster",
@@ -100,6 +112,13 @@ class JWT:
 
     @classmethod
     def construct_signature(cls, header, payload):
+        """
+        Creates signature using header and payload,
+        encrypting it with SHA256 (by default)
+        :param header: str
+        :param payload: str
+        :return: str
+        """
         encoded_string = urlsafe_b64encode(header) + "." + urlsafe_b64encode(payload)
         signature = b64encode(hmac.new(JWT_SECRET, encoded_string, hashlib.sha256).hexdigest())
         return signature

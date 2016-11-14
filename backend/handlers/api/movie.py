@@ -8,7 +8,6 @@ from backend.utils.helpers import json_response
 
 
 class MovieListHandler(webapp2.RequestHandler):
-
     @ensure_permissions("movie:read")
     def get(self):
         logging.debug("MovieListHandler. GET. auth: {}".format(self.request.headers.get("Authorization")))
@@ -28,6 +27,10 @@ class MovieListHandler(webapp2.RequestHandler):
             json_response(self, {"message": "Name and description fields must be filled"}, status=400)
             return
 
+        logging.debug("MovieListHandler. POST. name: {}. description: {}. auth: {}".format(
+            name, description, self.request.headers.get("Authorization")
+        ))
+
         movie = Movie(name=name, description=description)
         movie.put()
 
@@ -35,10 +38,10 @@ class MovieListHandler(webapp2.RequestHandler):
 
 
 class MovieDetailsHandler(webapp2.RequestHandler):
-
     @ensure_permissions("movie:read")
     def get(self, movie_id):
-        logging.debug("MovieListHandler. GET. movie_id: {}. auth: {}".format(movie_id, self.request.headers.get("Authorization")))
+        logging.debug("MovieDetailsHandler. GET. movie_id: {}. auth: {}".format(movie_id, self.request.headers.get(
+            "Authorization")))
 
         ok, movie = self._get_movie(movie_id)
         if not ok:
@@ -49,7 +52,8 @@ class MovieDetailsHandler(webapp2.RequestHandler):
     @ensure_permissions("movie:update")
     def post(self, movie_id):
         logging.debug(
-            "MovieListHandler. POST. movie_id: {}. auth: {}".format(movie_id, self.request.headers.get("Authorization")))
+            "MovieDetailsHandler. POST. movie_id: {}. auth: {}".format(movie_id,
+                                                                       self.request.headers.get("Authorization")))
 
         ok, movie = self._get_movie(movie_id)
         if not ok:
@@ -57,6 +61,10 @@ class MovieDetailsHandler(webapp2.RequestHandler):
 
         name = self.request.get("name", movie.name)
         description = self.request.get("description", movie.description)
+
+        logging.debug("MovieDetailsHandler. POST. movie_id: {}. name: {}. description: {}. auth: {}".format(
+            movie_id, name, description, self.request.headers.get("Authorization")
+        ))
 
         if not (name and description):
             json_response(self, {"message": "Name and description fields must be filled"}, status=400)
@@ -70,7 +78,8 @@ class MovieDetailsHandler(webapp2.RequestHandler):
     @ensure_permissions("movie:delete")
     def delete(self, movie_id):
         logging.debug(
-            "MovieListHandler. DELETE. movie_id: {}. auth: {}".format(movie_id, self.request.headers.get("Authorization")))
+            "MovieDetailsHandler. DELETE. movie_id: {}. auth: {}".format(movie_id,
+                                                                         self.request.headers.get("Authorization")))
 
         ok, movie = self._get_movie(movie_id)
         if not ok:
@@ -88,10 +97,9 @@ class MovieDetailsHandler(webapp2.RequestHandler):
         # movie_id is always int (based on handler regexp), but dispatcher sends as str
         movie = Movie.get_by_id(int(movie_id))
         if not movie:
-            logging.debug("Movie not found. movie_id: {}. auth: {}".format(
-                movie_id, self.request.headers.get("Authorization"))
-            )
+            logging.debug("MovieDetailsHandler. Movie not found. movie_id: {}. auth: {}".format(
+                movie_id, self.request.headers.get("Authorization")))
+
             json_response(self, {"message": "No such movie"}, status=404)
             return False, None
         return True, movie
-

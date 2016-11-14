@@ -49,7 +49,12 @@ class JWTTestCase(unittest.TestCase):
     def test_is_valid_against_scopes_true(self):
         token = JWT.create_token("test@email.com", "movie:read")
         jwt_token = JWTToken(token)
-        self.assertTrue(jwt_token.has_permissions("movie:read"))
+        try:
+            jwt_token.has_permissions("movie:read")
+            raised = False
+        except JWTValidationError:
+            raised = True
+        self.assertFalse(raised)
 
     def test_is_valid_parse_failed_invalid_token(self):
         token = "not_valid_token"
