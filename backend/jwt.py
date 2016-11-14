@@ -33,7 +33,7 @@ class JWTToken:
 
         return True
 
-    def is_valid_against_scopes(self, scopes):
+    def is_valid_against_scopes(self, *scopes):
 
         for scope in scopes:
             if scope not in self.parsed_payload["scopes"]:
@@ -52,7 +52,7 @@ class JWTToken:
         try:
             self.parsed_header, self.parsed_payload = json.loads(self.decoded_header), json.loads(self.decoded_payload)
         except ValueError:
-            raise JWTValidationError(message="Cannot load data from decoded token ")
+            raise JWTValidationError(message="Cannot load data from decoded token")
 
         self.signature = signature
 
@@ -67,14 +67,14 @@ class JWT:
         raise NotImplemented("Use classmethods instead of JWT Instance creation")
 
     @classmethod
-    def create_token(cls, email, scopes):
+    def create_token(cls, email, *scopes):
         """
         Creates token using user email and permission scopes
         :param: email: str
         :param: scopes: list
         """
         header = cls.construct_header()
-        payload = cls.construct_claim(email, scopes)
+        payload = cls.construct_claim(email, *scopes)
         signature = cls.construct_signature(header, payload)
         return b64encode(header) + "." + b64encode(payload) + "." + signature
 
@@ -87,7 +87,7 @@ class JWT:
         })
 
     @classmethod
-    def construct_claim(cls, email, scopes):
+    def construct_claim(cls, email, *scopes):
 
         return json.dumps(
             {

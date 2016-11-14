@@ -40,6 +40,6 @@ class LoginHandler(webapp2.RequestHandler):
         self._set_token(new_user)
 
     def _set_token(self, user):
-        token = JWT.create_token(user.email, JWT_DEFAULT_SCOPES)
+        token = JWT.create_token(user.email, *JWT_DEFAULT_SCOPES)
         self.response.headers["JWT"] = token
         self.response.status = 200

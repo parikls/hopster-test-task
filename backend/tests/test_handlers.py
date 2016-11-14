@@ -26,7 +26,6 @@ class TestAuthHandler(BaseTestCase):
     def setUp(self):
         super(TestAuthHandler, self).setUp()
 
-
     def test_login_email_blank(self):
         post_data = {"password": "fgkgjfdklgjkdfjgk"}
         request = webapp2.Request.blank("/api/auth/login/", POST=post_data)
